@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd">
+
+
+    <var name="domain" class="mywebflow.MyDomain" />
+
+    <input name="domainId"/>
+
+    <on-start>
+        <evaluate expression="dummyService.printId(domainId)"/>
+    </on-start>
+
+    <view-state id="index" view="myDomain/index.gsp" model="domain">
+        <transition on="performAction1" to="step2"/>
+    </view-state>
+
+    <view-state id="step2" view="myDomain/step2.gsp" model="domain">
+        <transition on="performAction2" to="save"/>
+    </view-state>
+
+    <action-state id="save">
+        <evaluate expression="dummyService.save(domain)" result="domain"/>
+        <transition to="finish"/>
+    </action-state>
+
+
+    <view-state id="finish" view="myDomain/finish.gsp" model="domain" >
+    </view-state>
+
+
+</flow>
